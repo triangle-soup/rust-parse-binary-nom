@@ -1,0 +1,10 @@
+[package]
+name = "parse_binary_nom"
+version = "0.1.0"
+edition = "2021"
+authors = ["neil hayes <neil@thethirdguild.com>"]
+
+[dependencies]
+anyhow = "1.0.68"
+nom = "7.1.3"
+thiserror = "1.0.38"
