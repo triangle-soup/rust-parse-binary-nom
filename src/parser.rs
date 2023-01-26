@@ -117,17 +117,10 @@ fn take_until_chunk(input: &[u8], tag: Tag) -> IResult<&[u8], &[u8]> {
 }
 
 fn parse_point(input: &[u8]) -> IResult<&[u8], Point> {
-    let (input, fx) = be_f32(input)?;
-    let (input, fy) = be_f32(input)?;
-    let (input, fz) = be_f32(input)?;
-    Ok((
-        input,
-        Point {
-            x: fx,
-            y: fy,
-            z: fz,
-        },
-    ))
+    let (input, x) = be_f32(input)?;
+    let (input, y) = be_f32(input)?;
+    let (input, z) = be_f32(input)?;
+    Ok((input, Point { x, y, z }))
 }
 
 fn parse_points(input: &[u8], data_size: ByteCount) -> IResult<&[u8], Vec<Point>> {
@@ -167,7 +160,7 @@ mod tests {
     #[rustfmt::skip]
     const TEST_INPUT_HEADER: [u8; 52] = [
         70,  79,  82,  77,
-        0,   0,   72,  234, 
+        0,   0,   72,  234,
         76,  88,  79,  66,
         86,  82,  83,  78,
         0,   0,   0,   32,
