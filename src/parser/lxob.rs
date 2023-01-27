@@ -22,33 +22,33 @@ pub const LXO_FILE_EXTENSION: &[&str] = &["lxo"];
 //  version_tag:  [u8],    // copy 4 bytes to array; e.g. header.version_tag.clone_from_slice(data);
 //
 #[derive(Debug)]
-pub struct FileHeader<'a> {
-    pub iff_id: &'a str,
+pub struct FileHeader {
+    pub iff_id: String,
     pub byte_count: ByteCount,
-    pub file_type_tag: &'a str,
-    pub version_tag: &'a str,
+    pub file_type_tag: String,
+    pub version_tag: String,
     pub major: u32,
     pub minor: u32,
     pub patch: u32,
-    pub file_type_author: &'a str,
+    pub file_type_author: String,
 }
 
-impl<'a> FileHeader<'a> {
+impl FileHeader {
     fn new() -> Self {
         Self {
-            iff_id: "",
+            iff_id: "".to_owned(),
             byte_count: 0,
-            file_type_tag: "",
-            version_tag: "",
+            file_type_tag: "".to_owned(),
+            version_tag: "".to_owned(),
             major: 0,
             minor: 0,
             patch: 0,
-            file_type_author: "",
+            file_type_author: "".to_owned(),
         }
     }
 }
 
-impl<'a> Default for FileHeader<'a> {
+impl Default for FileHeader {
     fn default() -> Self {
         Self::new()
     }
@@ -56,22 +56,22 @@ impl<'a> Default for FileHeader<'a> {
 
 /// Deserialised header from a single LXOB chunk.
 //
-#[derive(Debug, Clone, Copy)]
-pub struct ChunkHeader<'a> {
-    pub name: &'a str,
+#[derive(Debug)]
+pub struct ChunkHeader {
+    pub name: String,
     pub data_size: ByteCount,
 }
 
-impl<'a> ChunkHeader<'a> {
+impl ChunkHeader {
     pub fn new() -> Self {
         Self {
-            name: "",
+            name: "".to_owned(),
             data_size: 0,
         }
     }
 }
 
-impl<'a> Default for ChunkHeader<'a> {
+impl Default for ChunkHeader {
     fn default() -> Self {
         Self::new()
     }
@@ -80,13 +80,13 @@ impl<'a> Default for ChunkHeader<'a> {
 /// Deserialized [header](ChunkHeader) and data from a single LXOB chunk.
 //
 #[derive(Debug)]
-pub struct Chunk<'a, T> {
-    pub header: ChunkHeader<'a>,
+pub struct Chunk<T> {
+    pub header: ChunkHeader,
     pub data: Vec<T>,
 }
 
 #[allow(dead_code)]
-impl<'a, T> Chunk<'a, T> {
+impl<T> Chunk<T> {
     pub fn new() -> Self {
         Self {
             header: ChunkHeader::new(),
@@ -100,7 +100,7 @@ impl<'a, T> Chunk<'a, T> {
 }
 
 #[allow(dead_code)]
-impl<'a, T> Default for Chunk<'a, T> {
+impl<T> Default for Chunk<T> {
     fn default() -> Self {
         Self::new()
     }

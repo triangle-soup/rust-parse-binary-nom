@@ -1,6 +1,6 @@
 pub mod lxob;
-use lxob::*;
 use crate::geom::Point;
+use lxob::*;
 
 use nom::{
     bytes::complete::{take, take_until},
@@ -47,9 +47,9 @@ fn parse_u32(input: &[u8]) -> IResult<&[u8], u32> {
     be_u32(input)
 }
 
-fn parse_tag(input: &[u8]) -> IResult<&[u8], &str> {
+fn parse_tag(input: &[u8]) -> IResult<&[u8], String> {
     let (remains, tag) = take(4usize)(input)?;
-    Ok((remains, to_str(tag)))
+    Ok((remains, to_str(tag).to_owned()))
 }
 
 fn parse_usize(input: &[u8]) -> IResult<&[u8], usize> {
@@ -71,9 +71,9 @@ fn to_usize(val: u32) -> usize {
     }
 }
 
-fn parse_file_type_author(input: &[u8]) -> IResult<&[u8], &str> {
+fn parse_file_type_author(input: &[u8]) -> IResult<&[u8], String> {
     let (remains, author) = take_until("\0")(input)?;
-    Ok((remains, to_str(author)))
+    Ok((remains, to_str(author).to_owned()))
 }
 
 fn parse_chunk_header(input: &[u8]) -> IResult<&[u8], ChunkHeader> {
