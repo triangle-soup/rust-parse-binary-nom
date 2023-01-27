@@ -23,8 +23,7 @@ fn main() -> Result<()> {
     let (_, header) = parse_file_header(&buffer).expect("Parse the file's header.");
     println!("Header: {:#?}", header);
 
-    let (_, chunks) =
-        parse_chunk_headers(&buffer).expect("Parse all the chunks.");
+    let (_, chunks) = parse_chunk_headers(&buffer).expect("Parse all the chunks.");
     println!("Chunk count: {:#?}", chunks.len());
 
     let (_, pnts_chunk) = parse_chunk_pnts(&buffer).expect("Extracted 3d point data.");
