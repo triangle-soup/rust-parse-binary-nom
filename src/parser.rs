@@ -103,8 +103,8 @@ fn parse_chunk_header_skip_data(input: &[u8]) -> IResult<&[u8], ChunkHeader> {
 /// Parses only the header of each chunk; i.e. ignores/skips the data.
 //
 pub fn parse_chunk_headers(input: &[u8]) -> IResult<&[u8], Vec<ChunkHeader>> {
-    let (input, chunks) = many1(parse_chunk_header_skip_data)(input)?;
-    Ok((input, chunks))
+    let (remains, chunks) = many1(parse_chunk_header_skip_data)(input)?;
+    Ok((remains, chunks))
 }
 
 fn take_until_chunk(input: &[u8], tag: Tag) -> IResult<&[u8], &[u8]> {
@@ -114,10 +114,10 @@ fn take_until_chunk(input: &[u8], tag: Tag) -> IResult<&[u8], &[u8]> {
 }
 
 fn parse_point(input: &[u8]) -> IResult<&[u8], Point> {
-    let (input, x) = be_f32(input)?;
-    let (input, y) = be_f32(input)?;
-    let (input, z) = be_f32(input)?;
-    Ok((input, Point { x, y, z }))
+    let (remains, x) = be_f32(input)?;
+    let (remains, y) = be_f32(remains)?;
+    let (remains, z) = be_f32(remains)?;
+    Ok((remains, Point { x, y, z }))
 }
 
 fn parse_points(input: &[u8], data_size: ByteCount) -> IResult<&[u8], Vec<Point>> {
@@ -125,8 +125,8 @@ fn parse_points(input: &[u8], data_size: ByteCount) -> IResult<&[u8], Vec<Point>
     assert!(data_size % BYTES_PER_3D_POINT == 0);
 
     let point_count = data_size / BYTES_PER_3D_POINT;
-    let (input, points) = count(parse_point, point_count)(input)?;
-    Ok((input, points))
+    let (remains, points) = count(parse_point, point_count)(input)?;
+    Ok((remains, points))
 }
 
 /// Parse the PNTS chunk. A 3d point consists of three f32 floats.
