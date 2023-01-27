@@ -3,7 +3,7 @@ mod reader;
 use reader::{check_file_extension, read_file_to_buffer};
 mod geom;
 mod parser;
-use parser::lxob::{LXOB_HEADER_SIZE, LXO_FILE_EXTENSION};
+use parser::lxob::LXO_FILE_EXTENSION;
 use parser::{is_lxob, parse_chunk_headers, parse_chunk_pnts, parse_file_header};
 
 // ===============
@@ -24,7 +24,7 @@ fn main() -> Result<()> {
     println!("Header: {:#?}", header);
 
     let (_, chunks) =
-        parse_chunk_headers(&buffer[LXOB_HEADER_SIZE..]).expect("Parse all the chunks.");
+        parse_chunk_headers(&buffer).expect("Parse all the chunks.");
     println!("Chunk count: {:#?}", chunks.len());
 
     let (_, pnts_chunk) = parse_chunk_pnts(&buffer).expect("Extracted 3d point data.");

@@ -103,7 +103,7 @@ fn parse_chunk_header_skip_data(input: &[u8]) -> IResult<&[u8], ChunkHeader> {
 /// Parses only the header of each chunk; i.e. ignores/skips the data.
 //
 pub fn parse_chunk_headers(input: &[u8]) -> IResult<&[u8], Vec<ChunkHeader>> {
-    let (remains, chunks) = many1(parse_chunk_header_skip_data)(input)?;
+    let (remains, chunks) = many1(parse_chunk_header_skip_data)(&input[LXOB_HEADER_SIZE..])?;
     Ok((remains, chunks))
 }
 
