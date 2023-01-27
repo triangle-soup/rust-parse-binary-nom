@@ -1,6 +1,8 @@
 use anyhow::Result;
+mod file;
+use file::{check_file_extension, read_file_to_buffer};
+mod geom;
 mod parser;
-use parser::file::{check_file_extension, read_file_to_buffer};
 use parser::lxob::{LXOB_HEADER_SIZE, LXO_FILE_EXTENSION};
 use parser::{is_lxob, parse_chunk_headers, parse_chunk_pnts, parse_file_header};
 

@@ -1,9 +1,6 @@
-pub mod file;
-pub mod geom;
 pub mod lxob;
-
-use geom::Point;
 use lxob::*;
+use crate::geom::Point;
 
 use nom::{
     bytes::complete::{take, take_until},
