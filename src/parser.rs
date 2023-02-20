@@ -141,7 +141,7 @@ pub fn parse_chunk_pnts(input: &[u8]) -> IResult<&[u8], Chunk<Point>> {
     Ok((remains, Chunk::<Point> { header, data }))
 }
 
-/// Returns true if the data contains the LXOB file type speficier.
+/// Returns true if the data contains the LXOB file type identifier.
 pub fn is_lxob(input: &[u8]) -> bool {
     let (_, tag) = parse_tag(&input[IFF_ID_FIELD_SIZE + IFF_SIZE_FIELD_SIZE..])
         .expect("A 4-character alphabetic tag");

@@ -32,7 +32,7 @@ fn main() -> Result<()> {
 
     let (_, pnts_chunk) = parse_chunk_pnts(&buffer)
         .map_err(|e| Error::msg(format!("Error parsing PNTS chunk: {e}")))?;
-    println!("Points {pnts_chunk:#?}");
+    println!("Points: {pnts_chunk:#?}");
 
     Ok(())
 }
