@@ -18,7 +18,9 @@ fn main() -> Result<()> {
 
     let buffer = read_file_to_buffer(filename)?;
     println!("Bytes read: {:#?}", buffer.len());
-    assert!(is_lxob(&buffer), "Is a LXOB file?");
+    if ! is_lxob(&buffer) {
+        return Err(anyhow::Error::msg("LXOB file identifier not found.")); 
+    } 
 
     let (_, header) = parse_file_header(&buffer).map_err(|e| {
         anyhow::Error::msg(format!("Error parsing header: {e}"))
