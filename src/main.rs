@@ -20,13 +20,19 @@ fn main() -> Result<()> {
     println!("Bytes read: {:#?}", buffer.len());
     assert!(is_lxob(&buffer), "Is a LXOB file?");
 
-    let (_, header) = parse_file_header(&buffer).expect("Parse the file's header.");
+    let (_, header) = parse_file_header(&buffer).map_err(|e| {
+        anyhow::Error::msg(format!("Error parsing header: {}", e.to_string()))
+    })?;
     println!("Header: {:#?}", header);
 
-    let (_, chunks) = parse_chunk_headers(&buffer).expect("Parse all the chunks.");
+    let (_, chunks) = parse_chunk_headers(&buffer).map_err(|e| {
+        anyhow::Error::msg(format!("Error parsing chunk headers: {}", e.to_string()))
+    })?;
     println!("Chunk count: {:#?}", chunks.len());
 
-    let (_, pnts_chunk) = parse_chunk_pnts(&buffer).expect("Extracted 3d point data.");
+    let (_, pnts_chunk) = parse_chunk_pnts(&buffer).map_err(|e| {
+        anyhow::Error::msg(format!("Error parsing PNTS chunk: {}", e.to_string()))
+    })?;
     println!("Points {:#?}", pnts_chunk);
 
     Ok(())
