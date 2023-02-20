@@ -60,14 +60,14 @@ fn parse_usize(input: &[u8]) -> IResult<&[u8], usize> {
 fn to_str(val: &[u8]) -> &str {
     match str::from_utf8(val) {
         Ok(as_string) => as_string,
-        Err(e) => panic!("Invalid UTF-8 sequence: {}", e),
+        Err(e) => panic!("Invalid UTF-8 sequence: {e}"),
     }
 }
 
 fn to_usize(val: u32) -> usize {
     match usize::try_from(val) {
         Ok(as_usize) => as_usize,
-        Err(e) => panic!("usize unable to contain u32 {}", e),
+        Err(e) => panic!("usize unable to contain u32 {e}"),
     }
 }
 

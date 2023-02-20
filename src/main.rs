@@ -21,19 +21,19 @@ fn main() -> Result<()> {
     assert!(is_lxob(&buffer), "Is a LXOB file?");
 
     let (_, header) = parse_file_header(&buffer).map_err(|e| {
-        anyhow::Error::msg(format!("Error parsing header: {}", e.to_string()))
+        anyhow::Error::msg(format!("Error parsing header: {e}"))
     })?;
-    println!("Header: {:#?}", header);
+    println!("Header: {header:#?}");
 
     let (_, chunks) = parse_chunk_headers(&buffer).map_err(|e| {
-        anyhow::Error::msg(format!("Error parsing chunk headers: {}", e.to_string()))
+        anyhow::Error::msg(format!("Error parsing chunk headers: {e}"))
     })?;
     println!("Chunk count: {:#?}", chunks.len());
 
     let (_, pnts_chunk) = parse_chunk_pnts(&buffer).map_err(|e| {
-        anyhow::Error::msg(format!("Error parsing PNTS chunk: {}", e.to_string()))
+        anyhow::Error::msg(format!("Error parsing PNTS chunk: {e}"))
     })?;
-    println!("Points {:#?}", pnts_chunk);
+    println!("Points {pnts_chunk:#?}");
 
     Ok(())
 }

@@ -44,7 +44,7 @@ type Buffer = Vec<u8>;
 //
 pub fn read_file_to_buffer(filename: &str) -> Result<Buffer> {
     let mut file =
-        File::open(filename).with_context(|| format!("Failed to open {} file.", filename))?;
+        File::open(filename).with_context(|| format!("Failed to open {filename} file."))?;
 
     let mut buffer = Buffer::new();
 
